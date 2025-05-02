@@ -77,7 +77,7 @@ def createInputJson(output_file,
                     ):
 
     # hard coded paths to code on your computer and system
-    ecephys_directory = r'C:\Users\colonellj\Documents\ecephys_spike_sorting\ecephys_spike_sorting'
+    ecephys_directory = "/home/ngovin5/Documents/airForce-nathan/ecephys_spike_sorting_govi/ecephys_spike_sorting"
     
     # location of kilosort respositories for MATLAB versions.
     # determins what will be run by the kilosort_helper module
@@ -89,15 +89,14 @@ def createInputJson(output_file,
     elif ks_ver == '3.0':
         kilosort_repository = r'C:\Users\labadmin\Documents\KS20_for_preprocessed_data'
     else:
-        kilosort_repository = r''  # default path for when we aren't using any of these
+        kilosort_repository = "/home/ngovin5/Desktop/Kilosort"  # default path for when we aren't using any of these
             
-    npy_matlab_repository = r'C:\Users\colonellj\Documents\npy-matlab-master'
-    catGTPath = r'C:\Users\colonellj\Documents\CatGTWinApp\CatGT-win'
-    tPrime_path=r'C:\Users\colonellj\Documents\TPrime-win'
-    cWaves_path=r'C:\Users\colonellj\Documents\C_Waves-median\C_Waves-win'
-         
+    npy_matlab_repository = "/home/ngovin5/Desktop/npy-matlab/"
+    catGTPath = "/home/ngovin5/Desktop/CatGT-linux/"
+    tPrime_path= "/home/ngovin5/Desktop/TPrime-linux/"
+    cWaves_path= "/home/ngovin5/Desktop/C_Waves-linux/"
     # for config files and kilosort working space
-    kilosort_output_tmp = r'D:\kilosort_datatemp' 
+    kilosort_output_tmp = "/snel/share/share/data/Govindarajan_AirForce/ecephys_ks_out"
     
     
     # KS 3.0 and 4 do not calculation pc features for phy

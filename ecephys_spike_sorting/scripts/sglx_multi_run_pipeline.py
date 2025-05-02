@@ -64,7 +64,7 @@ logName = 'pipeline_test_log.csv'
 
 # Raw data directory = npx_directory
 # run_specs = name, gate, trigger and probes to process
-npx_directory = r'D:\SC048_in'
+npx_directory = "/snel/share/share/data/Govindarajan_AirForce/nibbles_20250410/nibbles_20250410_neural"
 
 # Each run_spec is a list of 4 strings:
 #   undecorated run name (no g/t specifier, the run field in CatGT)
@@ -77,7 +77,7 @@ npx_directory = r'D:\SC048_in'
 #           these strings must match a key in the param dictionaries above.
 
 run_specs = [									
-						['SC048_122920_ex', '0', '0,0', '0:2', ['cortex','thalamus','thalamus'] ]
+						['nibbles_20250410', '0', '0,0', '0', ['default'] ]
 ]
 
 # ------------------
@@ -86,7 +86,7 @@ run_specs = [
 # Set to an existing directory; all output will be written here.
 # Output will be in the standard SpikeGLX directory structure:
 # run_folder/probe_folder/*.bin
-catGT_dest = r'D:\SC048_out'
+catGT_dest = "/snel/share/share/data/Govindarajan_AirForce/pipeline_test_out"
 
 # ------------
 # CatGT params
@@ -95,10 +95,10 @@ run_CatGT = True   # set to False to sort/process previously processed data.
 
 
 # CAR mode for CatGT. Must be equal to 'None', 'gbldmx', 'gblcar' or 'loccar'
-car_mode = 'gblcar'
+car_mode = 'loccar'
 # inner and outer radii, in um for local comman average reference, if used
-loccar_min = 40
-loccar_max = 160
+loccar_min = 30
+loccar_max = 120
 
 # flag to process lf. The depth estimation module assumes lf has been processed.
 # if selected, must also include a range for filtering in the catGT_cmd_string
@@ -110,10 +110,10 @@ process_lf = False
 # Note 2: this command line includes specification of edge extraction
 # see CatGT readme for details
 # these parameters will be used for all runs
-catGT_cmd_string = '-prb_fld -out_prb_fld -apfilter=butter,12,300,10000 -lffilter=butter,12,1,500 -gfix=0.4,0.10,0.02 '
+catGT_cmd_string = '-prb_fld -out_prb_fld -apfilter=butter,12,300,5000  -gfix=0.4,0.10,0.02 '
 
 ni_present = True
-ni_extract_string = '-xa=0,0,0,1,3,500 -xia=0,0,1,3,3,0 -xd=0,0,-1,1,50 -xid=0,0,-1,2,1.7 -xid=0,0,-1,3,5'
+ni_extract_string = '-xa=0,0,0,1,3,500 '
 
 
 
@@ -163,7 +163,8 @@ c_Waves_snr_um = 160
 # events that should be exported with the phy output for PSTH plots
 # This funciton now happens in TPrime
 # If not using set to an empty string
-event_ex_param_str = 'xd=0,0,-1,1,50'
+event_ex_param_str = '-xa=0,0,0,4,3,500' # threshold is 1 volt
+# stream type (ni=0), 
 
 # -----------------
 # TPrime parameters
@@ -181,12 +182,12 @@ toStream_sync_params = 'imec0' # should be ni, imec<probe index>. or obx<obx ind
 modules = [            
             'ks4_helper',
             'kilosort_postprocessing',
-            #'noise_templates',  
+            'noise_templates',  
             'mean_waveforms',
             'quality_metrics'
 			]
 
-json_directory = r'D:\SC048_out\json_files'
+json_directory = "/snel/share/share/data/Govindarajan_AirForce/json_files"
 
 # -----------------------
 # -----------------------
