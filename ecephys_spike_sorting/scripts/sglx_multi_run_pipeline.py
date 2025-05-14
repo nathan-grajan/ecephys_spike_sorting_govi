@@ -7,6 +7,8 @@ from helpers import log_from_json
 from helpers import run_one_probe
 from create_input_json import createInputJson
 
+import logging
+logging.disable(logging.DEBUG)
 
 # script to run CatGT, kilosort, postprocessing and TPrime on data collected using
 # SpikeGLX. The construction of the paths assumes data was saved with
@@ -42,8 +44,8 @@ ksTh2_dict = {'default':'[10,4]', 'cortex':'[10,4]', 'medulla':'[10,4]', 'thalam
 # threshold values appropriate for KS3.0
 ksTh3_dict = {'default':'[9,9]', 'cortex':'[9,9]', 'medulla':'[9,9]', 'thalamus':'[9,9]'}
 # threshold values appropriate for KS4.0
-ksTh4_dict = {'default':'[8,9]', 'cortex':'[8,9]', 'medulla':'[8,9]', 'thalamus':'[8,9]'}
-
+ksTh4_dict = {'default':'[7,10]', 'cortex':'[8,9]', 'medulla':'[8,9]', 'thalamus':'[8,9]'}
+# [Th_universal, Th_learned]
 if ks_ver == '2.0' or ks_ver == '2.5':
     ksTh_dict = ksTh2_dict
 elif ks_ver == '3.0':    
@@ -64,7 +66,7 @@ logName = 'pipeline_test_log.csv'
 
 # Raw data directory = npx_directory
 # run_specs = name, gate, trigger and probes to process
-npx_directory = "/snel/share/share/data/Govindarajan_AirForce/nibbles_20250410/nibbles_20250410_neural"
+npx_directory = "/snel/share/share/data/Govindarajan_AirForce/nibbles_20250410/nibbles_20250410_GLXData"
 
 # Each run_spec is a list of 4 strings:
 #   undecorated run name (no g/t specifier, the run field in CatGT)
@@ -77,7 +79,7 @@ npx_directory = "/snel/share/share/data/Govindarajan_AirForce/nibbles_20250410/n
 #           these strings must match a key in the param dictionaries above.
 
 run_specs = [									
-						['nibbles_20250410', '0', '0,0', '0', ['default'] ]
+						['nibbles_20250410', '1,3', '0,0', '0', ['default'] ]
 ]
 
 # ------------------
@@ -86,7 +88,7 @@ run_specs = [
 # Set to an existing directory; all output will be written here.
 # Output will be in the standard SpikeGLX directory structure:
 # run_folder/probe_folder/*.bin
-catGT_dest = "/snel/share/share/data/Govindarajan_AirForce/pipeline_test_out"
+catGT_dest = "/snel/share/share/data/Govindarajan_AirForce/pipeline_test_out/nibbles_binning_depth_15"
 
 # ------------
 # CatGT params
@@ -110,12 +112,12 @@ process_lf = False
 # Note 2: this command line includes specification of edge extraction
 # see CatGT readme for details
 # these parameters will be used for all runs
-catGT_cmd_string = '-prb_fld -out_prb_fld -apfilter=butter,12,300,5000  -gfix=0.4,0.10,0.02 '
+catGT_cmd_string = '-prb_fld -out_prb_fld -apfilter=butter,12,300,5000  -gfix=0.4,0.10,0.02'
 
 ni_present = True
-ni_extract_string = '-xa=0,0,0,1,3,500 '
+ni_extract_string = '-xa=0,0,0,1,3,500 -xd=0,0,1,1,2.5'
 
-
+# digital line 0th word, 5th bit, holds for 2.5ms 
 
 # --------------------------
 # KS2, KS2.5, KS3 parameters
@@ -136,6 +138,7 @@ ks_minfr_goodchannels = 0.1   # used by KS2, 2.5, 3; set to 0 for KS2.5 and 3
 ks_CAR = 0          # CAR already done in catGT
 ks_nblocks = 6      # for KS2.5 KS3, and KS4; 1 for rigid registration in drift correction, 
                     # higher numbers to allow different drift for different 'blocks' of the probe
+ks4_binning_depth = 5 # for KS4, depth of binning in um
 
 # -------------------------------------------------------
 # KS4 specific parameters -- these are the default values
@@ -163,7 +166,7 @@ c_Waves_snr_um = 160
 # events that should be exported with the phy output for PSTH plots
 # This funciton now happens in TPrime
 # If not using set to an empty string
-event_ex_param_str = '-xa=0,0,0,4,3,500' # threshold is 1 volt
+event_ex_param_str = '' # threshold is 1 volt
 # stream type (ni=0), 
 
 # -----------------
@@ -392,6 +395,7 @@ for spec in run_specs:
                                        qm_isi_thresh = refPerMS/1000,
                                        ks4_duplicate_spike_ms = ks4_duplicate_spike_ms,
                                        ks4_min_template_size_um = ks4_min_template_size_um,
+                                       ks4_binning_depth = ks4_binning_depth,
                                        include_pc_metrics = True
                                        )   
 

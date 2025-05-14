@@ -73,7 +73,8 @@ def createInputJson(output_file,
                     include_pc_metrics = True,
                     ks_nNeighbors_sites_fix = 0,
                     ks4_duplicate_spike_ms = 0.25,
-                    ks4_min_template_size_um = 10
+                    ks4_min_template_size_um = 10, 
+                    ks4_binning_depth = 5,
                     ):
 
     # hard coded paths to code on your computer and system
@@ -355,6 +356,7 @@ def createInputJson(output_file,
                     'acg_threshold' : 0.20,
                     'template_seed' : ks_LTseed,
                     'cluster_seed' : ks_CSBseed,
+                    'binning_depth': ks4_binning_depth,
             }
     },
         
