@@ -88,7 +88,7 @@ run_specs = [
 # Set to an existing directory; all output will be written here.
 # Output will be in the standard SpikeGLX directory structure:
 # run_folder/probe_folder/*.bin
-catGT_dest = "/snel/share/share/data/Govindarajan_AirForce/pipeline_test_out/nibbles_binning_depth_15"
+catGT_dest = "/snel/share/share/data/Govindarajan_AirForce/pipeline_test_out/nibbles_large_batch_size_binning_depth_15"
 
 # ------------
 # CatGT params
@@ -139,6 +139,7 @@ ks_CAR = 0          # CAR already done in catGT
 ks_nblocks = 6      # for KS2.5 KS3, and KS4; 1 for rigid registration in drift correction, 
                     # higher numbers to allow different drift for different 'blocks' of the probe
 ks4_binning_depth = 5 # for KS4, depth of binning in um
+ks4_batch_size = 60000 * 5 # for KS4, number of samples to process at once
 
 # -------------------------------------------------------
 # KS4 specific parameters -- these are the default values
@@ -396,6 +397,7 @@ for spec in run_specs:
                                        ks4_duplicate_spike_ms = ks4_duplicate_spike_ms,
                                        ks4_min_template_size_um = ks4_min_template_size_um,
                                        ks4_binning_depth = ks4_binning_depth,
+                                        ks4_batch_size = ks4_batch_size,
                                        include_pc_metrics = True
                                        )   
 

@@ -23,6 +23,7 @@ class ks4_params(DefaultSchema):
     template_seed = Int(required=False, default=0, help='seed to pick which batches are used for finding universal templates')
     cluster_seed = Int(required=False, default=0, help='start seed for clustering')
     binning_depth = Float(required=False, default=5, help='depth of bins for clustering')
+    batch_size = Int(required=False, default=6000, help='number of samples in each batch')
     
 class KS4HelperParameters(DefaultSchema):
     do_CAR = Bool(required=False, default=True, help='set to True to perform common average referencing (median subtraction)')

@@ -75,6 +75,7 @@ def createInputJson(output_file,
                     ks4_duplicate_spike_ms = 0.25,
                     ks4_min_template_size_um = 10, 
                     ks4_binning_depth = 5,
+                    ks4_batch_size = 60000,
                     ):
 
     # hard coded paths to code on your computer and system
@@ -156,6 +157,7 @@ def createInputJson(output_file,
     
     # CatGT needs the inner and outer redii for local common average referencing
     # specified in sites
+    print(f"Batch size: {ks4_batch_size}\n\n\n")
 
     catGT_loccar_min_sites = int(round(catGT_loccar_min_um/vpitch))
     catGT_loccar_max_sites = int(round(catGT_loccar_max_um/vpitch))
@@ -339,7 +341,7 @@ def createInputJson(output_file,
             'doFilter' : ks_doFilter,        # not yet used
             'ks_make_copy': ks_make_copy,
             'save_preprocessed_copy' : bool(ks_copy_fproc),
-            # ks4_params are limited to members of the KS4 'settings' list
+            # ks4_params are limited to members of the KS4 'settings' list            
             'ks4_params' : {           
                     'Th_universal' : ks4_Th_universal,
                     'Th_learned' : ks4_Th_learned,  
@@ -357,6 +359,7 @@ def createInputJson(output_file,
                     'template_seed' : ks_LTseed,
                     'cluster_seed' : ks_CSBseed,
                     'binning_depth': ks4_binning_depth,
+                    'batch_size' : ks4_batch_size,
             }
     },
         
