@@ -67,6 +67,7 @@ def createInputJson(output_file,
                     ks_CAR = 0,
                     ks_output_tag = 'ks2',
                     c_Waves_snr_um = 160,
+                    c_Waves_calc_half = False,
                     wm_spread_thresh = 0.12,
                     wm_site_range = 16,
                     qm_isi_thresh = 1.5/1000,
@@ -230,6 +231,7 @@ def createInputJson(output_file,
             "lfp_sample_rate" : 2500,
             "bit_volts" : uVPerBit,
             "num_channels" : num_channels,
+            "num_sync_channels" : nSY,
             "reference_channels" : reference_channels,
             "vertical_site_spacing" : 10e-6,
             "ap_band_file" : continuous_file,
@@ -386,7 +388,9 @@ def createInputJson(output_file,
             "use_C_Waves" : True,
             "snr_radius" : c_waves_radius_sites,
             "snr_radius_um" : c_Waves_snr_um,
-            "nAP" : nAP
+            "nAP" : nAP,
+            "calc_half_run" : c_Waves_calc_half
+            
         },
             
 
